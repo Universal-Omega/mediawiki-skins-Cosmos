@@ -1,25 +1,22 @@
 <template>
-	<!-- eslint-disable-next-line vue/no-undef-components -->
-	<wvui-typeahead-search
+	<cdx-typeahead-search
 		:id="id"
 		ref="searchForm"
-		:client="getClient"
-		:domain="domain"
-		:suggestions-label="$i18n( 'searchresults' ).text()"
+		:class="rootClasses"
+		:search-results-label="$i18n( 'searchresults' ).text()"
 		:accesskey="searchAccessKey"
 		:title="searchTitle"
-		:article-path="articlePath"
 		:placeholder="searchPlaceholder"
 		:aria-label="searchPlaceholder"
-		:search-page-title="searchPageTitle"
 		:initial-input-value="searchQuery"
 		:button-label="$i18n( 'searchbutton' ).text()"
 		:form-action="action"
-		:search-language="language"
 		:show-thumbnail="showThumbnail"
-		:show-description="showDescription"
 		:highlight-query="highlightQuery"
 		:auto-expand-width="autoExpandWidth"
+		:search-results="suggestions"
+		:search-footer-url="searchFooterUrl"
+		@input="onInput"
 	>
 		<template #default>
 			<input
@@ -37,18 +34,20 @@
 		<template #search-footer-text="{ searchQuery }">
 			<span v-i18n-html:cosmos-searchsuggest-containing="[ searchQuery ]"></span>
 		</template>
-	</wvui-typeahead-search>
+	</cdx-typeahead-search>
 </template>
 
 <script>
-const wvui = require( 'wvui-search' ),
+/* global SearchSubmitEvent */
+const { CdxTypeaheadSearch } = require( '@wikimedia/codex-search' ),
+	{ defineComponent, nextTick } = require( 'vue' ),
 	restClient = require( './restSearchClient.js' ),
 	actionClient = require( './actionSearchClient.js' );
 
 // @vue/component
-module.exports = {
+module.exports = exports = defineComponent( {
 	name: 'App',
-	components: wvui,
+	components: { CdxTypeaheadSearch },
 	props: {
 		id: {
 			type: String,
@@ -109,38 +108,60 @@ module.exports = {
 			default: false
 		}
 	},
-	computed: {
-		/**
-		 * @return {string}
-		 */
-		articlePath: () => mw.config.get( 'wgScript' ),
-		/**
-		 * Allow wikis to replace the default search API client
-		 *
-		 * @return {Object}
-		 */
-		getClient: () => {
-			if ( mw.config.get( 'wgCosmosSearchUseActionAPI', false ) ) {
-				return actionClient( mw.config );
-			}
+	data() {
+		return {
+			// Suggestions to be shown in the TypeaheadSearch menu.
+			suggestions: [],
 
-			return restClient( mw.config );
-		},
-		language: () => {
-			return mw.config.get( 'wgUserLanguage' );
-		},
-		domain: () => {
-			return mw.config.get( 'wgCosmosSearchHost', location.host );
+			// Link to the search page for the current search query.
+			searchFooterUrl: '',
+
+			// Whether to apply a CSS class that disables the CSS transitions on the text input
+			disableTransitions: this.autofocusInput
+		};
+	},
+	computed: {
+		rootClasses() {
+			return {
+				'cosmos-search-box-disable-transitions': this.disableTransitions
+			};
+		}
+	},
+	methods: {
+		/**
+		 * Fetch suggestions when new input is received.
+		 *
+		 * @param {string} value
+		 */
+		onInput: function ( value ) {
+			const domain = mw.config.get( 'wgCosmosSearchHost', location.host ),
+				query = value.trim();
+			if ( query === '' ) {
+				this.suggestions = [];
+				this.searchFooterUrl = '';
+				return;
+			}
+			restClient.fetchByTitle( query, domain, 10, this.showDescription ).fetch
+				.then( ( data ) => {
+					this.suggestions = data.results;
+					this.searchFooterUrl = urlGenerator.generateUrl( query );
+					const event = {
+						numberOfResults: data.results.length,
+						query: query
+					};
+					instrumentation.listeners.onFetchEnd( event );
+				} )
+				.catch( () => {
+					// TODO: error handling
+				} );
 		}
 	},
 	mounted() {
-		// access the element associated with the wvui-typeahead-search component
-		// eslint-disable-next-line no-jquery/variable-pattern
-		const wvuiSearchForm = this.$refs.searchForm.$el;
 		if ( this.autofocusInput ) {
-			// TODO: The wvui-typeahead-search component does not accept an autofocus parameter
-			// or directive. This can be removed when its does.
-			wvuiSearchForm.querySelector( 'input' ).focus();
+			this.$refs.searchForm.focus();
+			nextTick( () => {
+				this.disableTransitions = false;
+			} );
 		}
 	}
 };
