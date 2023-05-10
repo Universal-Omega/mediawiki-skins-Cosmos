@@ -129,6 +129,8 @@ function adaptApiResponse( query, actionResponse ) {
 			convertObjectToArray( pages )
 				.map( ( { pageid, title, pageprops, description, extract, thumbnail } ) => ( {
 					id: pageid,
+					value: pageid,
+					label: title,
 					key: title,
 					title: title,
 					description: descriptionSource === 'pagedescription' &&
