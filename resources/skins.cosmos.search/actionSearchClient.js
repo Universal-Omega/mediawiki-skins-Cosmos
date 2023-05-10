@@ -174,8 +174,7 @@ function adaptApiResponse( query, actionResponse ) {
  * @return {SearchClient}
  */
 function actionSearchClient( config ) {
-	const customClient = config.get( 'wgCosmosSearchClient' );
-	return customClient || {
+	return config.get( 'wgCosmosSearchClient', {
 		/**
 		 * @type {fetchByTitle}
 		 */
@@ -209,7 +208,7 @@ function actionSearchClient( config ) {
 				fetch: searchResponsePromise
 			};
 		}
-	};
+	} );
 }
 
 module.exports = actionSearchClient;
