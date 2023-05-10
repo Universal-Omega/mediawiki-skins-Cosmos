@@ -149,7 +149,7 @@ module.exports = exports = defineComponent( {
 				actionClient( mw.config ).fetchByTitle( query, domain, 10 ).fetch
 					.then( ( data ) => {
 						this.suggestions = data.results;
-						// this.searchFooterUrl = urlGenerator.generateUrl( query );
+						this.searchFooterUrl = urlGenerator.generateUrl( query );
 						const event = {
 							numberOfResults: data.results.length,
 							query: query
@@ -164,7 +164,7 @@ module.exports = exports = defineComponent( {
 			restClient( mw.config ).fetchByTitle( query, domain, 10 ).fetch
 				.then( ( data ) => {
 					this.suggestions = data.results;
-					// this.searchFooterUrl = urlGenerator.generateUrl( query );
+					this.searchFooterUrl = urlGenerator.generateUrl( query );
 					const event = {
 						numberOfResults: data.results.length,
 						query: query
