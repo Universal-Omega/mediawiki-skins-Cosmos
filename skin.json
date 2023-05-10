@@ -150,7 +150,7 @@
 			"es6": true,
 			"dependencies": [
 				"mediawiki.Uri",
-				"wvui-search"
+				"@wikimedia/codex-search"
 			],
 			"packageFiles": [
 				"resources/skins.cosmos.search/skins.cosmos.search.js",
