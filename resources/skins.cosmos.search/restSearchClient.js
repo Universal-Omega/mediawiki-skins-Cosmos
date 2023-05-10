@@ -107,8 +107,7 @@ function adaptApiResponse( query, restResponse ) {
  * @return {SearchClient}
  */
 function restSearchClient( config ) {
-	const customClient = config.get( 'wgCosmosSearchClient' );
-	return customClient || {
+	return config.get( 'wgCosmosSearchClient', {
 		/**
 		 * @type {fetchByTitle}
 		 */
@@ -129,7 +128,7 @@ function restSearchClient( config ) {
 				fetch: searchResponsePromise
 			};
 		}
-	};
+	} );
 }
 
 module.exports = restSearchClient;
