@@ -48,11 +48,21 @@ const { CdxTypeaheadSearch } = require( '@wikimedia/codex-search' ),
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'App',
+	compatConfig: {
+		MODE: 3
+	},
+	compilerOptions: {
+		whitespace: 'condense'
+	},
 	components: { CdxTypeaheadSearch },
 	props: {
 		id: {
 			type: String,
 			required: true
+		},
+		autocapitalizeValue: {
+			type: String,
+			default: undefined
 		},
 		searchPageTitle: {
 			type: String,
@@ -67,41 +77,39 @@ module.exports = exports = defineComponent( {
 			default: ''
 		},
 		/** The keyboard shortcut to focus search. */
-		// eslint-disable-next-line vue/require-default-prop
 		searchAccessKey: {
-			type: String
+			type: String,
+			default: undefined
 		},
 		/** The access key informational tip for search. */
-		// eslint-disable-next-line vue/require-default-prop
 		searchTitle: {
-			type: String
+			type: String,
+			default: undefined
 		},
 		/** The ghost text shown when no search query is entered. */
-		// eslint-disable-next-line vue/require-default-prop
 		searchPlaceholder: {
-			type: String
+			type: String,
+			default: undefined
 		},
 		/**
 		 * The search query string taken from the server-side rendered input immediately before
 		 * client render.
 		 */
-		// eslint-disable-next-line vue/require-default-prop
 		searchQuery: {
-			type: String
+			type: String,
+			default: undefined
 		},
 		showThumbnail: {
 			type: Boolean,
-			// eslint-disable-next-line vue/no-boolean-default
+			required: true,
 			default: true
 		},
 		showDescription: {
 			type: Boolean,
-			// eslint-disable-next-line vue/no-boolean-default
 			default: true
 		},
 		highlightQuery: {
 			type: Boolean,
-			// eslint-disable-next-line vue/no-boolean-default
 			default: true
 		},
 		autoExpandWidth: {
@@ -117,14 +125,20 @@ module.exports = exports = defineComponent( {
 			// Link to the search page for the current search query.
 			searchFooterUrl: '',
 
+			// The current search query. Used to detect whether a fetch response is stale.
+			currentSearchQuery: '',
+
 			// Whether to apply a CSS class that disables the CSS transitions on the text input
-			disableTransitions: this.autofocusInput
+			disableTransitions: this.autofocusInput,
+
+			isFocused: false
 		};
 	},
 	computed: {
 		rootClasses() {
 			return {
-				'cosmos-search-box-disable-transitions': this.disableTransitions
+				'cosmos-search-box-disable-transitions': this.disableTransitions,
+				'cosmos-typeahead-search--active': this.isFocused
 			};
 		}
 	},
