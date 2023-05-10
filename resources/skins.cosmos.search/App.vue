@@ -41,8 +41,9 @@
 /* global SearchSubmitEvent */
 const { CdxTypeaheadSearch } = require( '@wikimedia/codex-search' ),
 	{ defineComponent, nextTick } = require( 'vue' ),
-	restClient = require( './restSearchClient.js' ),
-	actionClient = require( './actionSearchClient.js' );
+	restClient = require( './restSearchClient.js' )( mw.config ),
+	actionClient = require( './actionSearchClient.js' )( mw.config ),
+	urlGenerator = require( './urlGenerator.js' )( mw.config );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -146,7 +147,7 @@ module.exports = exports = defineComponent( {
 			}
 
 			if ( mw.config.get( 'wgCosmosSearchUseActionAPI', false ) ) {
-				actionClient( mw.config ).fetchByTitle( query, domain, 10 ).fetch
+				actionClient.fetchByTitle( query, domain, 10 ).fetch
 					.then( ( data ) => {
 						this.suggestions = data.results;
 						this.searchFooterUrl = urlGenerator.generateUrl( query );
@@ -161,7 +162,7 @@ module.exports = exports = defineComponent( {
 					return;
 			}
 
-			restClient( mw.config ).fetchByTitle( query, domain, 10 ).fetch
+			restClient.fetchByTitle( query, domain, 10 ).fetch
 				.then( ( data ) => {
 					this.suggestions = data.results;
 					this.searchFooterUrl = urlGenerator.generateUrl( query );
