@@ -155,6 +155,7 @@
 			"packageFiles": [
 				"resources/skins.cosmos.search/skins.cosmos.search.js",
 				"resources/skins.cosmos.search/fetch.js",
+				"resources/skins.cosmos.search/urlGenerator.js",
 				"resources/skins.cosmos.search/actionSearchClient.js",
 				"resources/skins.cosmos.search/restSearchClient.js",
 				"resources/skins.cosmos.search/App.vue",
