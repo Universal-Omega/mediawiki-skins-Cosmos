@@ -1,9 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Kimberli Mäkäräinen (WMNO)",
 			"Yupik"
 		]
 	},
 	"cosmos-anonymous": "Anonyma",
-	"cosmos-personaltools-userpage": "Geavaheaddjisiidu"
+	"cosmos-createpage-next": "Čuovvovaš",
+	"cosmos-personaltools-userpage": "Geavaheaddjisiidu",
+	"cosmos-action-cancel": "Šluhtte"
 }
