@@ -190,21 +190,20 @@ function actionSearchClient( config ) {
 				};
 			}
 
-			const headers = {
-				accept: 'application/json'
-			};
-
 			const url = getUrl( query, domain, limit, config );
-			const { fetch, abort } = fetchJson( url, { headers } );
-
-			const searchResponsePromise = fetch.then(
-				( /** @type {ActionResponse} */ res ) => {
-					return adaptApiResponse( query, res );
+			const result = fetchJson( url, {
+				headers: {
+					accept: 'application/json'
 				}
-			);
+			} );
+
+			const searchResponsePromise = result.fetch
+				.then( ( /** @type {ActionResponse} */ res ) => {
+					return adaptApiResponse( query, res );
+				} );
 
 			return {
-				abort,
+				abort: result.abort,
 				fetch: searchResponsePromise
 			};
 		}
