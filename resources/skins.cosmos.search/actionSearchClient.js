@@ -1,7 +1,8 @@
 /** @module actionSearchClient */
 
 const fetchJson = require( './fetch.js' ),
-	searchConfig = require( './config.json' );
+	searchConfig = require( './config.json' ),
+	urlGenerator = require( './urlGenerator.js' );
 
 /**
  * @typedef {Object} ActionResponse
@@ -115,11 +116,13 @@ function convertObjectToArray( pages ) {
 }
 
 /**
+ * @param {MwMap} config
  * @param {string} query
  * @param {ActionResponse} actionResponse
  * @return {SearchResponse}
  */
-function adaptApiResponse( query, actionResponse ) {
+function adaptApiResponse( config, query, actionResponse ) {
+	const urlGeneratorInstance = urlGenerator( config );
 	const descriptionSource = searchConfig.wgCosmosSearchDescriptionSource;
 	const pages = actionResponse.query ? actionResponse.query.pages : {};
 
@@ -133,6 +136,7 @@ function adaptApiResponse( query, actionResponse ) {
 					label: title,
 					key: title,
 					title: title,
+					url: urlGeneratorInstance.generateUrl( title ),
 					description: descriptionSource === 'pagedescription' &&
 						pageprops &&
 						pageprops.description ?
@@ -200,7 +204,7 @@ function actionSearchClient( config ) {
 			} );
 			const searchResponsePromise = result.fetch
 				.then( ( /** @type {ActionResponse} */ res ) => {
-					return adaptApiResponse( query, res );
+					return adaptApiResponse( config, query, res );
 				} );
 			return {
 				abort: result.abort,
