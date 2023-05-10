@@ -138,13 +138,13 @@ module.exports = exports = defineComponent( {
 				query = value.trim();
 			if ( query === '' ) {
 				this.suggestions = [];
-				// this.searchFooterUrl = '';
+				this.searchFooterUrl = '';
 				return;
 			}
 			restClient.fetchByTitle( query, domain, 10, this.showDescription ).fetch
 				.then( ( data ) => {
 					this.suggestions = data.results;
-					this.searchFooterUrl = urlGenerator.generateUrl( query );
+					// this.searchFooterUrl = urlGenerator.generateUrl( query );
 					const event = {
 						numberOfResults: data.results.length,
 						query: query
