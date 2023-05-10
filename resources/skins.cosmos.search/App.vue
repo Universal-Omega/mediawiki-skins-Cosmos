@@ -145,6 +145,22 @@ module.exports = exports = defineComponent( {
 				return;
 			}
 
+			if ( mw.config.get( 'wgCosmosSearchUseActionAPI', false ) ) {
+				actionClient( mw.config ).fetchByTitle( query, domain, 10 ).fetch
+					.then( ( data ) => {
+						this.suggestions = data.results;
+						// this.searchFooterUrl = urlGenerator.generateUrl( query );
+						const event = {
+							numberOfResults: data.results.length,
+							query: query
+						};
+					} )
+					.catch( () => {
+						// TODO: error handling
+					} );
+					return;
+			}
+
 			restClient( mw.config ).fetchByTitle( query, domain, 10 ).fetch
 				.then( ( data ) => {
 					this.suggestions = data.results;
