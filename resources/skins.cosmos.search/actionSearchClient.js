@@ -196,12 +196,10 @@ function actionSearchClient( config ) {
 					accept: 'application/json'
 				}
 			} );
-
 			const searchResponsePromise = result.fetch
 				.then( ( /** @type {ActionResponse} */ res ) => {
 					return adaptApiResponse( query, res );
 				} );
-
 			return {
 				abort: result.abort,
 				fetch: searchResponsePromise
