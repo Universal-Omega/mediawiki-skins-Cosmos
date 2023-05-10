@@ -145,7 +145,7 @@ module.exports = exports = defineComponent( {
 				return;
 			}
 
-			restClient.fetchByTitle( query, domain, 10 ).fetch
+			restClient( mw.config ).fetchByTitle( query, domain, 10 ).fetch
 				.then( ( data ) => {
 					this.suggestions = data.results;
 					// this.searchFooterUrl = urlGenerator.generateUrl( query );
