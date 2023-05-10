@@ -138,7 +138,7 @@ module.exports = exports = defineComponent( {
 				query = value.trim();
 			if ( query === '' ) {
 				this.suggestions = [];
-				this.searchFooterUrl = '';
+				// this.searchFooterUrl = '';
 				return;
 			}
 			restClient.fetchByTitle( query, domain, 10, this.showDescription ).fetch
@@ -149,7 +149,6 @@ module.exports = exports = defineComponent( {
 						numberOfResults: data.results.length,
 						query: query
 					};
-					instrumentation.listeners.onFetchEnd( event );
 				} )
 				.catch( () => {
 					// TODO: error handling
