@@ -136,12 +136,16 @@ module.exports = exports = defineComponent( {
 		onInput: function ( value ) {
 			const domain = mw.config.get( 'wgCosmosSearchHost', location.host ),
 				query = value.trim();
+
+			this.currentSearchQuery = query;
+
 			if ( query === '' ) {
 				this.suggestions = [];
 				this.searchFooterUrl = '';
 				return;
 			}
-			restClient.fetchByTitle( query, domain, 10, this.showDescription ).fetch
+
+			restClient.fetchByTitle( query, domain, 10 ).fetch
 				.then( ( data ) => {
 					this.suggestions = data.results;
 					// this.searchFooterUrl = urlGenerator.generateUrl( query );
