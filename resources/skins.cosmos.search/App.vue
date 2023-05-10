@@ -17,6 +17,8 @@
 		:search-results="suggestions"
 		:search-footer-url="searchFooterUrl"
 		@input="onInput"
+		@focus="onFocus"
+		@blur="onBlur"
 	>
 		<template #default>
 			<input
@@ -188,6 +190,14 @@ module.exports = exports = defineComponent( {
 				.catch( () => {
 					// TODO: error handling
 				} );
+		},
+
+		onFocus() {
+			this.isFocused = true;
+		},
+
+		onBlur() {
+			this.isFocused = false;
 		}
 	},
 	mounted() {
