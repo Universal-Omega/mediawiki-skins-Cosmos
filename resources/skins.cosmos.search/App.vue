@@ -163,5 +163,5 @@ module.exports = exports = defineComponent( {
 			} );
 		}
 	}
-};
+} );
 </script>
