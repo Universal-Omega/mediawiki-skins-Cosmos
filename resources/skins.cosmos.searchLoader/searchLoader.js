@@ -38,7 +38,7 @@ function loadSearchModule( element, moduleName, afterLoadFn ) {
 		function onFocusOut() {
 			$( '#cosmos-banner-userOptions' ).show();
 			$( '.cosmos-mobile-menu-button' ).show();
-			$( '.cdx-button' ).css( { visibility: 'hidden', width: '25px' } );
+			$( '.cdx-button' ).css( { visibility: 'hidden', width: '30px' } );
 		}
 
 		function onFocus() {
