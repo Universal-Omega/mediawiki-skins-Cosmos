@@ -163,7 +163,7 @@ module.exports = exports = defineComponent( {
 			}
 
 			if ( mw.config.get( 'wgCosmosSearchUseActionAPI', false ) ) {
-				actionClient.fetchByTitle( query, domain ).fetch
+				actionClient.fetchByTitle( query, domain, undefined, this.showDescription ).fetch
 					.then( ( data ) => {
 						this.suggestions = data.results;
 						this.searchFooterUrl = urlGenerator.generateUrl( query );
@@ -178,7 +178,7 @@ module.exports = exports = defineComponent( {
 					return;
 			}
 
-			restClient.fetchByTitle( query, domain ).fetch
+			restClient.fetchByTitle( query, domain, undefined, this.showDescription ).fetch
 				.then( ( data ) => {
 					this.suggestions = data.results;
 					this.searchFooterUrl = urlGenerator.generateUrl( query );
