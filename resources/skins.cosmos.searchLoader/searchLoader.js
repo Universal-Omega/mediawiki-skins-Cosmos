@@ -38,13 +38,13 @@ function loadSearchModule( element, moduleName, afterLoadFn ) {
 		function onFocusOut() {
 			$( '#cosmos-banner-userOptions' ).show();
 			$( '.cosmos-mobile-menu-button' ).show();
-			$( '.cdx-button' ).css( { visibility: 'hidden' } );
+			$( '.cdx-button' ).hide();
 		}
 
 		function onFocus() {
 			$( '#cosmos-banner-userOptions' ).hide();
 			$( '.cosmos-mobile-menu-button' ).hide();
-			$( '.cdx-button' ).css( { visibility: 'visible' } );
+			$( '.cdx-button' ).show();
 		}
 
 		if ( $( window ).width() < 851 ) {
