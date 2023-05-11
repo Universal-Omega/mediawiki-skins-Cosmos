@@ -137,7 +137,7 @@ function adaptApiResponse( config, query, actionResponse, showDescription ) {
 					label: title,
 					key: title,
 					title: title,
-					url: urlGeneratorInstance.generateUrl( title ),
+					url: urlGeneratorInstance.generateUrl( { title: title } ),
 					description: showDescription ? ( descriptionSource === 'pagedescription' &&
 						pageprops &&
 						pageprops.description ?
