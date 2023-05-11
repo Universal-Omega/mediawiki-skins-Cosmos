@@ -49,7 +49,7 @@ const fetchJson = require( './fetch.js' ),
  */
 
 /**
- * Build URL used for fetch request
+ * Build API URL used for fetch request
  *
  * @param {string} query The search term.
  * @param {string} domain The base URL for the wiki without protocol.
@@ -57,7 +57,7 @@ const fetchJson = require( './fetch.js' ),
  * @param {MwMap} config
  * @return {string} url
  */
-function getUrl( query, domain, limit, config ) {
+function getApiUrl( query, domain, limit, config ) {
 	const endpoint = '//' + domain + config.get( 'wgScriptPath' ) + '/api.php?format=json',
 		cacheExpiry = searchConfig.wgSearchSuggestCacheExpiry,
 		params = {
@@ -119,9 +119,10 @@ function convertObjectToArray( pages ) {
  * @param {MwMap} config
  * @param {string} query
  * @param {ActionResponse} actionResponse
+ * @param {boolean} showDescription
  * @return {SearchResponse}
  */
-function adaptApiResponse( config, query, actionResponse ) {
+function adaptApiResponse( config, query, actionResponse, showDescription ) {
 	const urlGeneratorInstance = urlGenerator( config );
 	const descriptionSource = searchConfig.wgCosmosSearchDescriptionSource;
 	const pages = actionResponse.query ? actionResponse.query.pages : {};
@@ -137,7 +138,7 @@ function adaptApiResponse( config, query, actionResponse ) {
 					key: title,
 					title: title,
 					url: urlGeneratorInstance.generateUrl( title ),
-					description: descriptionSource === 'pagedescription' &&
+					description: showDescription ? ( descriptionSource === 'pagedescription' &&
 						pageprops &&
 						pageprops.description ?
 						( pageprops.description.length > 60 ?
@@ -146,7 +147,7 @@ function adaptApiResponse( config, query, actionResponse ) {
 								pageprops.description || ''
 						) :
 						descriptionSource === 'textextracts' ? extract || '' :
-							description || '',
+							description || '' ) : undefined,
 					thumbnail: thumbnail ? {
 						url: thumbnail.source,
 						width: thumbnail.width,
@@ -184,7 +185,7 @@ function actionSearchClient( config ) {
 		/**
 		 * @type {fetchByTitle}
 		 */
-		fetchByTitle: ( query, domain, limit = searchConfig.wgCosmosMaxSearchResults ) => {
+		fetchByTitle: ( query, domain, limit = searchConfig.wgCosmosMaxSearchResults, showDescription = true ) => {
 			query = query.trim();
 
 			if ( !query ) {
@@ -196,7 +197,7 @@ function actionSearchClient( config ) {
 				};
 			}
 
-			const url = getUrl( query, domain, limit, config );
+			const url = getApiUrl( query, domain, limit, config );
 			const result = fetchJson( url, {
 				headers: {
 					accept: 'application/json'
@@ -204,7 +205,7 @@ function actionSearchClient( config ) {
 			} );
 			const searchResponsePromise = result.fetch
 				.then( ( /** @type {ActionResponse} */ res ) => {
-					return adaptApiResponse( config, query, res );
+					return adaptApiResponse( config, query, res, showDescription );
 				} );
 			return {
 				abort: result.abort,
