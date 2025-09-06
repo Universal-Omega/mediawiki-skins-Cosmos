@@ -93,7 +93,7 @@
 				"elements": true,
 				"interface": true,
 				"interface-category": true,
-				"interface-message-box": true,
+				"interface-message-box": false,
 				"logo": true,
 				"normalize": true
 			},
@@ -150,11 +150,32 @@
 			],
 			"messages": [ "cosmos-search-loader" ]
 		},
+		"skins.cosmos.search.codex.styles": {
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexStyleOnly": true,
+			"codexComponents": [
+				"CdxTypeaheadSearch",
+				"CdxSearchInput",
+				"CdxButton",
+				"CdxRadio",
+				"CdxMessage"
+			]
+		},
+		"skins.cosmos.search.codex.scripts": {
+			"dependencies": [
+				"skins.cosmos.search.codex.styles"
+			],
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexScriptOnly": true,
+			"codexComponents": [
+				"CdxTypeaheadSearch"
+			]
+		},
 		"skins.cosmos.search": {
 			"es6": true,
 			"dependencies": [
 				"mediawiki.Uri",
-				"@wikimedia/codex-search"
+				"skins.cosmos.search.codex.scripts"
 			],
 			"packageFiles": [
 				"resources/skins.cosmos.search/skins.cosmos.search.js",
