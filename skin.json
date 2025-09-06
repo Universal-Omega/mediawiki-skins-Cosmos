@@ -1,6 +1,6 @@
 {
 	"name": "Cosmos",
-	"version": "7.0.0",
+	"version": "7.1.0",
 	"author": [
 		"Universal Omega",
 		"..."
@@ -11,7 +11,7 @@
 	"license-name": "GPL-3.0-or-later",
 	"type": "skin",
 	"requires": {
-		"MediaWiki": ">= 1.42.0"
+		"MediaWiki": ">= 1.43.0"
 	},
 	"ValidSkinNames": {
 		"cosmos": {
@@ -97,10 +97,6 @@
 				"logo": true,
 				"normalize": true
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": {
 				"resources/skins.cosmos.styles/common.less": {
 					"media": "screen"
@@ -124,10 +120,6 @@
 			}
 		},
 		"skins.cosmos.js": {
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"scripts": [
 				"resources/skins.cosmos.js/cosmos.js",
 				"resources/skins.cosmos.js/mobile.js"
@@ -172,9 +164,7 @@
 			]
 		},
 		"skins.cosmos.search": {
-			"es6": true,
 			"dependencies": [
-				"mediawiki.Uri",
 				"skins.cosmos.search.codex.scripts"
 			],
 			"packageFiles": [
@@ -192,14 +182,11 @@
 			"messages": [
 				"searchbutton",
 				"searchresults",
+				"cosmos-search-loader",
 				"cosmos-searchsuggest-containing"
 			]
 		},
 		"skins.cosmos.rail": {
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": "resources/skins.cosmos.rail/rail.less"
 		},
 		"skins.cosmos.portableinfobox": {
@@ -208,10 +195,6 @@
 				"content-body": false,
 				"toc": false
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": {
 				"resources/extensions/PortableInfobox/PortableInfobox.less": {
 					"media": "screen"
@@ -224,10 +207,6 @@
 				"content-body": false,
 				"toc": false
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": "resources/extensions/PortableInfobox/PortableInfoboxDefaultTheme.less"
 		},
 		"skins.cosmos.portableinfobox.europa": {
@@ -236,10 +215,6 @@
 				"content-body": false,
 				"toc": false
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": "resources/extensions/PortableInfobox/PortableInfoboxEuropaTheme.less"
 		},
 		"skins.cosmos.socialprofile": {
@@ -248,10 +223,6 @@
 				"content-body": false,
 				"toc": false
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": {
 				"resources/extensions/SocialProfile/profile-common.less": {
 					"media": "screen"
@@ -264,10 +235,6 @@
 				"content-body": false,
 				"toc": false
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": {
 				"resources/extensions/SocialProfile/profiletabs.less": {
 					"media": "screen"
@@ -280,10 +247,6 @@
 				"content-body": false,
 				"toc": false
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": {
 				"resources/extensions/SocialProfile/profileavatar.less": {
 					"media": "screen"
@@ -296,10 +259,6 @@
 				"content-body": false,
 				"toc": false
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": {
 				"resources/extensions/SocialProfile/profileeditcount.less": {
 					"media": "screen"
@@ -312,10 +271,6 @@
 				"content-body": false,
 				"toc": false
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": {
 				"resources/extensions/SocialProfile/profiletags.less": {
 					"media": "screen"
@@ -328,10 +283,6 @@
 				"content-body": false,
 				"toc": false
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": {
 				"resources/extensions/SocialProfile/profilebio.less": {
 					"media": "screen"
@@ -344,10 +295,6 @@
 				"content-body": false,
 				"toc": false
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": {
 				"resources/extensions/CodeMirror.visualEditor/darkTheme.less": {
 					"media": "screen"
@@ -360,10 +307,6 @@
 				"content-body": false,
 				"toc": false
 			},
-			"targets": [
-				"desktop",
-				"mobile"
-			],
 			"styles": {
 				"resources/extensions/CodeEditor/CodeEditor.less": {
 					"media": "screen"
